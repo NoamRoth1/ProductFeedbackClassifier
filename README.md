@@ -4,6 +4,7 @@
 This repository contains a machine learning project that focuses on classifying product feedback into different categories. The project utilizes natural language processing techniques and the Naive Bayes algorithm to predict the category of feedback based on its content.
 
 ## Table of Contents
+- [Overview](#overview)
 - [Dataset](#dataset)
 - [Preprocessing](#preprocessing)
 - [Training and Evaluation](#training-and-evaluation)
