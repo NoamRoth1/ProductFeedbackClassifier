@@ -8,7 +8,6 @@ This repository contains a machine learning project that focuses on classifying 
 - [Preprocessing](#preprocessing)
 - [Training and Evaluation](#training-and-evaluation)
 - [Results](#results)
-- [Contributing](#contributing)
 
 ## Overview
 Product feedback plays a crucial role in understanding customer sentiment and improving products and services. This project aims to automate the categorization of feedback to efficiently process and analyze large volumes of customer comments.
