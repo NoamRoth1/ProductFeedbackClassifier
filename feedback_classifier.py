@@ -7,6 +7,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import pandas as pd
+import plotly.express as px
+
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -125,3 +132,45 @@ y_pred = classifier.predict(X_test)
 
 # Print the classification report
 print(classification_report(y_test, y_pred))
+
+# Predict the labels for the entire dataset
+all_predictions = classifier.predict(features)
+
+# Calculate evaluation metrics on the entire dataset
+accuracy = accuracy_score(labels, all_predictions)
+precision = precision_score(labels, all_predictions, average='weighted')
+recall = recall_score(labels, all_predictions, average='weighted')
+f1 = f1_score(labels, all_predictions, average='weighted')
+
+# Print the evaluation metrics
+print(f"Accuracy: {accuracy}")
+print(f"Precision: {precision}")
+print(f"Recall: {recall}")
+print(f"F1-score: {f1}")
+
+# List of preprocessed comments and labels
+preprocessed_comments = [preprocess_comment(comment) for comment, _ in data]
+labels = [label for _, label in data]
+
+# Create a DataFrame with preprocessed comments and labels
+df = pd.DataFrame({'Comment': preprocessed_comments, 'Label': labels})
+
+# Group the DataFrame by problem categories and count the occurrences
+grouped_df = df.groupby('Label').count().reset_index()
+
+# Initialize the Dash app
+app = dash.Dash(__name__)
+
+# Define the layout of the dashboard
+app.layout = html.Div(
+    children=[
+        html.H1("Product Feedback Dashboard"),
+        dcc.Graph(
+            figure=px.bar(grouped_df, x='Label', y='Comment', title='Problem Categories Distribution')
+        )
+    ]
+)
+
+# Run the Dash app
+if __name__ == '__main__':
+    app.run_server(debug=True)
